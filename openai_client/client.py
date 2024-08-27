@@ -17,7 +17,7 @@ class AzureOpenAIClient:
     async def generate_content(self, data:str, trends = None):
         """Generování obsahu pomocí Azure OpenAI API."""
         try:          
-            trending_topics = ', '.join(trends)
+            #trending_topics = ', '.join(trends)
             payload = {
                 "messages": [
                     {"role": "system", "content": (
@@ -26,9 +26,9 @@ class AzureOpenAIClient:
                         "poskytnulého názvu oboru. Článek by měl být strukturovaný, profesionální a vhodný "
                         "pro publikaci na odborném webu. Použijte formátování vhodné pro webový článek, "
                         "včetně titulků, podnadpisů, odstavců a seznamů, pokud je to vhodné. "
+                        "Buď velice podrobný a vždu uvěď co nejkonkrétnější příklad."
                         "Zaměřte se na přesnost a přínosnost informací a udržuj přátelský, ale odborný tón."
-                        "Pokud se ti to hodí, zapracuj současné trendy jako:"+ trending_topics +
-                        "Halvním zaměřením je vytvořit use cases, jak v daném oboru využít AI a to havně se zaměřením na LLM."
+                        "Hlavním zaměřením je vytvořit use cases, jak v daném oboru využít AI a to havně se zaměřením na LLM."
                         "Výstup piš vždy v češtině a namísto markdownu používej html tagy bez css stylů."
                     )},
                     {"role": "user", "content": f"Na základě následujících dat vytvořte článek: {data}"}
