@@ -14,7 +14,7 @@ class AzureOpenAIClient:
             "api-key": self.api_key
         }
 
-    async def generate_content(self, data:str, trends):
+    async def generate_content(self, data:str, trends = None):
         """Generování obsahu pomocí Azure OpenAI API."""
         try:          
             trending_topics = ', '.join(trends)

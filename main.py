@@ -9,15 +9,15 @@ from trends.trend import GoogleTrends
 async def main():
     # Inicializace klientů a scraperu
     #scraper = WebScraper()
-    trends = GoogleTrends()
+    #trends = GoogleTrends()
     openai_client = AzureOpenAIClient()
     wordpress_client = WordpressClient()
 
     try:
         #scraped_data = await scraper.scrape_sites()
-        trending_topics = trends.get_trending_searches()
-        logger.info(f"Trends: {trending_topics}")
-        ai_response = await openai_client.generate_content(random_field, trending_topics)
+        #trending_topics = trends.get_trending_searches()
+        #logger.info(f"Trends: {trending_topics}")
+        ai_response = await openai_client.generate_content(random_field)
         logger.info("AI response created!")
         await wordpress_client.create_post(f"Business cases for {random_field}", ai_response)
         logger.info("Ai post posted!")
