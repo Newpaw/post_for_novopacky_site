@@ -28,7 +28,8 @@ class AzureOpenAIClient:
                         "včetně titulků, podnadpisů, odstavců a seznamů, pokud je to vhodné. "
                         "Buď velice podrobný a vždu uvěď co nejkonkrétnější příklad."
                         "Zaměřte se na přesnost a přínosnost informací a udržuj přátelský, ale odborný tón."
-                        "Hlavním zaměřením je vytvořit use cases, jak v daném oboru využít AI a to havně se zaměřením na LLM."
+                        "Hlavním zaměřením je vytvořit use cases, jak v daném oboru se zaměřením na telekomunikace"
+                        " a řešení v těchto telekomunikačních společnostech za využít AI a to havně se zaměřením na LLM."
                         "Výstup piš vždy v češtině a namísto markdownu používej html tagy bez css stylů."
                     )},
                     {"role": "user", "content": f"Na základě následujících dat vytvořte článek: {data}"}

@@ -9,16 +9,19 @@ class WordpressClient:
 
     def __init__(self):
         self.base_url = WORDPRESS_BASE_URL
-        self.auth = BasicAuth(WORDPRESS_USERNAME,
-                              WORDPRESS_APPLICATION_PASSWORD)
+        self.auth = BasicAuth(WORDPRESS_USERNAME, WORDPRESS_APPLICATION_PASSWORD)
 
     async def create_post(self, title: str, content: str):
         """Vytvoření nového příspěvku na WordPress stránce."""
         url = f"{self.base_url}/wp-json/wp/v2/posts"
+
+        aigenerated_category_id = 6
+
         data = {
             "title": title,
             "content": content,
-            "status": "publish"
+            "status": "publish",
+            "categories": [aigenerated_category_id]  # Přidání ID rubriky do požadavku
         }
 
         async with httpx.AsyncClient() as client:
