@@ -25,7 +25,7 @@ class WordpressClient:
             response = await client.post(url, auth=self.auth, json=data)
 
             if response.status_code == 201:
-                logger.info("Příspěvek byl úspěšně vytvořen.")
+                logger.debug("Příspěvek byl úspěšně vytvořen.")
             else:
                 logger.error(f"Chyba: {response.status_code}")
                 logger.debug(response.json())

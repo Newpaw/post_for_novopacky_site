@@ -1,11 +1,8 @@
 import httpx
 import asyncio
-import logging
+from utils.logger import logger
 from httpx import BasicAuth
 from typing import Protocol
-
-# Nastavení základního logování
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class HttpClient(Protocol):
@@ -48,10 +45,10 @@ class WordpressClient:
     def _handle_response(response: httpx.Response) -> None:
         """Handle the response from the server."""
         if response.status_code == 201:
-            logging.info("Příspěvek byl úspěšně vytvořen.")
+            logger.info("Příspěvek byl úspěšně vytvořen.")
         else:
-            logging.error(f"Chyba: {response.status_code}")
-            logging.debug(response.json())
+            logger.error(f"Chyba: {response.status_code}")
+            logger.debug(response.json())
 
 
 async def main():
