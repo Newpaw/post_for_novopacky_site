@@ -1,25 +1,34 @@
 import asyncio
-#from scraping.scraper import WebScraper
 from openai_client.client import AzureOpenAIClient
 from wordpress.client import WordpressClient
-from utils.logger import logger  # Import loggeru
+from utils.logger import logger
 from random_fields.one_filed import random_field
-#from trends.trend import GoogleTrends
+from database.database import DatabaseClient  # Import DatabaseClient
 
 async def main():
-    # Inicializace klientů a scraperu
-    #scraper = WebScraper()
-    #trends = GoogleTrends()
+    # Inicializace klientů
     openai_client = AzureOpenAIClient()
     wordpress_client = WordpressClient()
+    db_client = DatabaseClient()  # Inicializace DatabaseClient
 
     try:
-        #scraped_data = await scraper.scrape_sites()
-        #trending_topics = trends.get_trending_searches()
-        #logger.info(f"Trends: {trending_topics}")
-        ai_response = await openai_client.generate_content(random_field)
+        # Generování nového tématu
+        topic = await openai_client.generate_topic()
+
+        # Kontrola, zda téma již existuje
+        if db_client.topic_exists(topic):
+            logger.info(f"Téma '{topic}' již existuje v databázi, nový článek nebude vytvořen.")
+            return
+
+        # Uložení nového tématu do databáze
+        db_client.save_topic(topic)
+
+        # Generování obsahu na základě nového tématu
+        ai_response = await openai_client.generate_content(topic)
         logger.info("AI response created!")
-        await wordpress_client.create_post(f"{random_field}: use cases", ai_response)
+
+        # Publikování příspěvku na WordPress
+        await wordpress_client.create_post(f"{topic}", ai_response)
         logger.info("AI post posted!")
 
     except Exception as e:
