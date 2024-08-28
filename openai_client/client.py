@@ -1,7 +1,7 @@
 import httpx
 from config import (OPENAI_API_KEY, OPENAI_ENDPOINT, OPENAI_MODEL)
 from utils.logger import logger
-from database.database import DatabaseClient  # Importujeme třídu pro práci s databází
+from database.database import DatabaseClient
 
 class AzureOpenAIClient:
     """Třída pro komunikaci s Azure OpenAI API."""
@@ -14,7 +14,7 @@ class AzureOpenAIClient:
             "Content-Type": "application/json",
             "api-key": self.api_key
         }
-        self.db_client = DatabaseClient(db_path)  # Inicializace klienta pro databázi
+        self.db_client = DatabaseClient(db_path) 
 
     async def generate_unique_topic(self):
         """Generování unikátního nápadu na téma pomocí Azure OpenAI API."""
@@ -26,7 +26,8 @@ class AzureOpenAIClient:
             existing_topics_str = "; ".join(existing_topics)
             prompt = (
                 "Jste zkušený redaktor s hlubokými znalostmi v oblasti AI a IT technologií. "
-                "Vaším úkolem je vytvořit nápad na nové téma pro článek zaměřený na telekomunikace "
+                "Vaším úkolem je vytvořit nápad na nové téma pro článek zaměřený na telekomunikace nebo kontaktní centra."
+                "Věnuj se tomu oborům, které dělají operátoři v České republioce (O2, T-Mobile, Vodafone) jako je telekomunikace, TV, prodej HW (telefonů) a kontaktní centra."
                 "a využití AI v tomto oboru. Přemýšlejte o aktuálních trendech a inovacích, které by mohly být zajímavé. "
                 "Vyhněte se tématům, které již existují: " + existing_topics_str +
                 ". Vrať jako odpověď POUZE hlavní téma!"
