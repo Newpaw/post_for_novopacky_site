@@ -2,26 +2,20 @@ import asyncio
 from openai_client.client import AzureOpenAIClient
 from wordpress.client import WordpressClient
 from utils.logger import logger
-from random_fields.one_filed import random_field
-from database.database import DatabaseClient  # Import DatabaseClient
 
 async def main():
     # Inicializace klientů
     openai_client = AzureOpenAIClient()
     wordpress_client = WordpressClient()
-    db_client = DatabaseClient()  # Inicializace DatabaseClient
 
     try:
-        # Generování nového tématu
-        topic = await openai_client.generate_topic()
+        # Generování nového unikátního tématu
+        topic = await openai_client.generate_unique_topic()
 
-        # Kontrola, zda téma již existuje
-        if db_client.topic_exists(topic):
-            logger.info(f"Téma '{topic}' již existuje v databázi, nový článek nebude vytvořen.")
+        # Kontrola, zda bylo úspěšně vygenerováno nové téma
+        if topic is None:
+            logger.info("Nové unikátní téma se nepodařilo vygenerovat, ukončuji proces.")
             return
-
-        # Uložení nového tématu do databáze
-        db_client.save_topic(topic)
 
         # Generování obsahu na základě nového tématu
         ai_response = await openai_client.generate_content(topic)
