@@ -2,6 +2,7 @@ import asyncio
 from openai_client.client import AzureOpenAIClient
 from wordpress.client import WordpressClient
 from utils.logger import logger
+from search.searcher import BraveSearchClient
 
 async def main():
     # Inicializace klientů
@@ -16,6 +17,13 @@ async def main():
         if topic is None:
             logger.info("Nové unikátní téma se nepodařilo vygenerovat, ukončuji proces.")
             return
+
+
+        #brave_search_client = BraveSearchClient()
+        #results = await brave_search_client.fetch_search_results("Ai news")
+        #title_description_dict = brave_search_client.extract_titles_and_descriptions(results)
+        #logger.info(f"Brave search results fetched! Title-Description pairs: {title_description_dict}")
+        
 
         # Generování obsahu na základě nového tématu
         ai_response = await openai_client.generate_content(topic)
